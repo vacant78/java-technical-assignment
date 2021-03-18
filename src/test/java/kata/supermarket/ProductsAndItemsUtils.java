@@ -49,6 +49,10 @@ class ProductsAndItemsUtils {
         return new ByUnitProduct(new BigDecimal("0.49"), DiscountType.BUY_3_FOR_PRICE_OF_2).ofUnits(units);
     }
 
+    static Item multiplePintsOfPremiumMilkWithBuy2For1PoundDiscount(int units) {
+        return new ByUnitProduct(new BigDecimal("0.80"), DiscountType.BUY_2_FOR_1_POUND).ofUnits(units);
+    }
+
     static Item aPackOfDigestives() {
         return new ByUnitProduct(new BigDecimal("1.55")).ofUnits(1);
     }
@@ -82,6 +86,12 @@ class ProductsAndItemsUtils {
         return Arguments.of(units + " items priced per unit",
             new BigDecimal("0.49").multiply(new BigDecimal(units)).setScale(2, RoundingMode.HALF_UP).toString(),
             ImmutableList.of(multiplePintsOfMilkWithBuy3ForPriceOf2Discount(units)));
+    }
+
+    static Arguments multipleItemsPricedPerUnitWithBuy2For1PoundDiscount(int units) {
+        return Arguments.of(units + " items priced per unit",
+            new BigDecimal("0.80").multiply(new BigDecimal(units)).setScale(2, RoundingMode.HALF_UP).toString(),
+            ImmutableList.of(multiplePintsOfPremiumMilkWithBuy2For1PoundDiscount(units)));
     }
 
 
