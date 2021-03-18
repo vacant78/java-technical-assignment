@@ -37,11 +37,11 @@ class ProductsAndItemsUtils {
     }
 
     static Item aPintOfMilk() {
-        return new Product(new BigDecimal("0.49")).oneOf();
+        return new Product(new BigDecimal("0.49")).ofUnits(1);
     }
 
     static Item aPackOfDigestives() {
-        return new Product(new BigDecimal("1.55")).oneOf();
+        return new Product(new BigDecimal("1.55")).ofUnits(1);
     }
 
     static WeighedProduct aKiloOfAmericanSweets() {
