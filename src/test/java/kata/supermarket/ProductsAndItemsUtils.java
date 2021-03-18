@@ -53,6 +53,11 @@ class ProductsAndItemsUtils {
         return new ByUnitProduct(new BigDecimal("0.80"), DiscountType.BUY_2_FOR_1_POUND).ofUnits(units);
     }
 
+    static Item weighedPotatoesWithBuy1KiloForHalfPriceDiscount(String kilograms) {
+        return new WeighedProduct(new BigDecimal("0.60"), DiscountType.BUY_1_KILO_FOR_HALF_PRICE)
+            .weighing(new BigDecimal(kilograms));
+    }
+
     static Item aPackOfDigestives() {
         return new ByUnitProduct(new BigDecimal("1.55")).ofUnits(1);
     }
@@ -92,6 +97,12 @@ class ProductsAndItemsUtils {
         return Arguments.of(units + " items priced per unit",
             new BigDecimal("0.80").multiply(new BigDecimal(units)).setScale(2, RoundingMode.HALF_UP).toString(),
             ImmutableList.of(multiplePintsOfPremiumMilkWithBuy2For1PoundDiscount(units)));
+    }
+
+    static Arguments weighedItemPricedPerKiloWithBuy1KiloForHalfPriceDiscount(String kilograms) {
+        return Arguments.of(kilograms + "kg of items priced per kilo",
+            new BigDecimal("0.60").multiply(new BigDecimal(kilograms)).setScale(2, RoundingMode.HALF_UP).toString(),
+            ImmutableList.of(weighedPotatoesWithBuy1KiloForHalfPriceDiscount(kilograms)));
     }
 
 

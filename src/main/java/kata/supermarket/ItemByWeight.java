@@ -45,4 +45,12 @@ public class ItemByWeight implements Item {
     public BigDecimal applyDiscount(Discount discount) {
         return discount.apply(this);
     }
+
+    public BigDecimal weightInKilos() {
+        return weightInKilos;
+    }
+
+    public BigDecimal pricePerKilo() {
+        return product.pricePerKilo();
+    }
 }
