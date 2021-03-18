@@ -3,11 +3,27 @@ package kata.supermarket;
 import java.math.BigDecimal;
 import java.util.Collection;
 
-public interface Discount {
+public abstract class Discount {
 
-    BigDecimal calculate(Collection<Item> items);
+    protected abstract DiscountType discountType();
 
-    BigDecimal apply(ItemByUnit itemByUnit);
+    public BigDecimal calculate(Collection<Item> items) {
+        final BigDecimal totalDiscount = items.stream()
+            .filter(item -> item.product().discountApplies(discountType()))
+            .map(item -> item.applyDiscount(this))
+            .reduce(BigDecimal::add)
+            .orElse(BigDecimal.ZERO);
 
-    BigDecimal apply(ItemByWeight itemByWeight);
+        return totalDiscount;
+    }
+
+    public BigDecimal apply(ItemByUnit itemByUnit) {
+        return BigDecimal.ZERO;
+    }
+
+    public BigDecimal apply(ItemByWeight itemByWeight) {
+        return BigDecimal.ZERO;
+    }
+
 }
+
