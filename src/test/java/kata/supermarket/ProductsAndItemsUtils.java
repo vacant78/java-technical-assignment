@@ -2,6 +2,7 @@ package kata.supermarket;
 
 import com.google.common.collect.ImmutableList;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Collections;
 import org.junit.jupiter.params.provider.Arguments;
@@ -44,6 +45,10 @@ class ProductsAndItemsUtils {
         return new ByUnitProduct(new BigDecimal("0.49"), DiscountType.BUY_1_GET_1_FREE).ofUnits(1);
     }
 
+    static Item multiplePintsOfMilkWithBuy3ForPriceOf2Discount(int units) {
+        return new ByUnitProduct(new BigDecimal("0.49"), DiscountType.BUY_3_FOR_PRICE_OF_2).ofUnits(units);
+    }
+
     static Item aPackOfDigestives() {
         return new ByUnitProduct(new BigDecimal("1.55")).ofUnits(1);
     }
@@ -71,6 +76,12 @@ class ProductsAndItemsUtils {
     static Arguments twoItemsPricedPerUnitWithBuy1Get1FreeDiscount() {
         return Arguments.of("two items priced per unit", "0.98", ImmutableList.of(aPintOfMilkWithBuy1Get1FreeDiscount(),
             aPintOfMilkWithBuy1Get1FreeDiscount()));
+    }
+
+    static Arguments multipleItemsPricedPerUnitWithBuy3Get2FreeDiscount(int units) {
+        return Arguments.of(units + " items priced per unit",
+            new BigDecimal("0.49").multiply(new BigDecimal(units)).setScale(2, RoundingMode.HALF_UP).toString(),
+            ImmutableList.of(multiplePintsOfMilkWithBuy3ForPriceOf2Discount(units)));
     }
 
 
