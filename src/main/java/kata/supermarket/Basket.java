@@ -1,5 +1,6 @@
 package kata.supermarket;
 
+import com.google.common.collect.Lists;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -7,7 +8,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Basket {
+
     private final List<Item> items;
+    private final List<Discount> discounts = Lists.newArrayList();
 
     public Basket() {
         this.items = new ArrayList<>();
@@ -25,7 +28,12 @@ public class Basket {
         return new TotalCalculator().calculate();
     }
 
+    public void addDiscounts(final List<Discount> discounts) {
+        this.discounts.addAll(discounts);
+    }
+
     private class TotalCalculator {
+
         private final List<Item> items;
 
         TotalCalculator() {
@@ -39,15 +47,12 @@ public class Basket {
                     .setScale(2, RoundingMode.HALF_UP);
         }
 
-        /**
-         * TODO: This could be a good place to apply the results of
-         *  the discount calculations.
-         *  It is not likely to be the best place to do those calculations.
-         *  Think about how Basket could interact with something
-         *  which provides that functionality.
-         */
         private BigDecimal discounts() {
-            return BigDecimal.ZERO;
+            return discounts.stream()
+                .map(discount -> discount.calculate(items))
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO)
+                .setScale(2, RoundingMode.HALF_UP);
         }
 
         private BigDecimal calculate() {
