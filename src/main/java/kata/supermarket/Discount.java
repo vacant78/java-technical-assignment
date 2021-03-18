@@ -1,10 +1,10 @@
 package kata.supermarket;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Collection;
 
 public interface Discount {
 
-    BigDecimal calculate(List<Item> items);
+    BigDecimal calculate(Collection<Item> items);
 
 }

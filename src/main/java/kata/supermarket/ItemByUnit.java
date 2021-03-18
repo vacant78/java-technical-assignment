@@ -1,13 +1,14 @@
 package kata.supermarket;
 
+import com.google.common.base.Preconditions;
 import java.math.BigDecimal;
 
 public class ItemByUnit implements Item {
 
     private final int units;
-    private final Product product;
+    private final ByUnitProduct product;
 
-    ItemByUnit(final Product product, final int units) {
+    ItemByUnit(final ByUnitProduct product, final int units) {
         this.product = product;
         this.units = units;
     }
@@ -20,5 +21,22 @@ public class ItemByUnit implements Item {
         return product.pricePerUnit()
             .multiply(new BigDecimal(units))
             .setScale(2, BigDecimal.ROUND_HALF_UP);
+    }
+
+    @Override
+    public Product product() {
+        return product;
+    }
+
+    @Override
+    public Item add(Item item) {
+        Preconditions.checkArgument(this.getClass().equals(item.getClass()), "Cannot add incompatible item");
+        return this.add((ItemByUnit) item);
+    }
+
+    @Override
+    public ItemByUnit add(ItemByUnit other) {
+        Preconditions.checkArgument(this.product.equals(other.product), "Cannot add incompatible products");
+        return this.addUnits(other.units);
     }
 }

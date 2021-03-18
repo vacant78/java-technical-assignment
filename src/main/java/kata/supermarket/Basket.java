@@ -1,27 +1,32 @@
 package kata.supermarket;
 
+import static java.util.Optional.ofNullable;
+
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class Basket {
 
-    private final List<Item> items;
+    private final Map<Product, Item> itemsByProduct = Maps.newHashMap();
     private final List<Discount> discounts = Lists.newArrayList();
 
     public Basket() {
-        this.items = new ArrayList<>();
     }
 
     public void add(final Item item) {
-        this.items.add(item);
+
+        this.itemsByProduct.compute(item.product(), (k, v) ->
+            ofNullable(v).map(value -> value.add(item)).orElse(item));
     }
 
-    List<Item> items() {
-        return Collections.unmodifiableList(items);
+    Collection<Item> items() {
+        return Collections.unmodifiableCollection(itemsByProduct.values());
     }
 
     public BigDecimal total() {
@@ -34,22 +39,22 @@ public class Basket {
 
     private class TotalCalculator {
 
-        private final List<Item> items;
+        private final Collection<Item> itemsByProduct;
 
         TotalCalculator() {
-            this.items = items();
+            this.itemsByProduct = items();
         }
 
         private BigDecimal subtotal() {
-            return items.stream().map(Item::price)
-                    .reduce(BigDecimal::add)
-                    .orElse(BigDecimal.ZERO)
-                    .setScale(2, RoundingMode.HALF_UP);
+            return itemsByProduct.stream().map(Item::price)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO)
+                .setScale(2, RoundingMode.HALF_UP);
         }
 
         private BigDecimal discounts() {
             return discounts.stream()
-                .map(discount -> discount.calculate(items))
+                .map(discount -> discount.calculate(itemsByProduct))
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO)
                 .setScale(2, RoundingMode.HALF_UP);

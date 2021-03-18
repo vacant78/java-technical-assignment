@@ -37,11 +37,11 @@ class ProductsAndItemsUtils {
     }
 
     static Item aPintOfMilk() {
-        return new Product(new BigDecimal("0.49")).ofUnits(1);
+        return new ByUnitProduct(new BigDecimal("0.49")).ofUnits(1);
     }
 
     static Item aPackOfDigestives() {
-        return new Product(new BigDecimal("1.55")).ofUnits(1);
+        return new ByUnitProduct(new BigDecimal("1.55")).ofUnits(1);
     }
 
     static WeighedProduct aKiloOfAmericanSweets() {
@@ -50,6 +50,10 @@ class ProductsAndItemsUtils {
 
     static Item twoFiftyGramsOfAmericanSweets() {
         return aKiloOfAmericanSweets().weighing(new BigDecimal(".25"));
+    }
+
+    static Item fourHundredGramsOfAmericanSweets() {
+        return aKiloOfAmericanSweets().weighing(new BigDecimal(".40"));
     }
 
     static WeighedProduct aKiloOfPickAndMix() {
