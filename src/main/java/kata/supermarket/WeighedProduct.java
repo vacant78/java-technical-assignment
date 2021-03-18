@@ -4,11 +4,16 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 
-public class WeighedProduct implements Product {
+public class WeighedProduct extends Product {
 
     private final BigDecimal pricePerKilo;
 
     public WeighedProduct(final BigDecimal pricePerKilo) {
+        this.pricePerKilo = pricePerKilo;
+    }
+
+    public WeighedProduct(final BigDecimal pricePerKilo, DiscountType discountType) {
+        super(discountType);
         this.pricePerKilo = pricePerKilo;
     }
 

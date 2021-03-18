@@ -2,14 +2,13 @@ package kata.supermarket;
 
 import static kata.supermarket.ProductsAndItemsUtils.aSingleItemPricedPerUnit;
 import static kata.supermarket.ProductsAndItemsUtils.noItems;
-import static kata.supermarket.ProductsAndItemsUtils.twoItemsPricedPerUnit;
+import static kata.supermarket.ProductsAndItemsUtils.twoItemsPricedPerUnitWithBuy1Get1FreeDiscount;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.google.common.collect.ImmutableList;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
 import java.util.stream.Stream;
-import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -31,7 +30,7 @@ class BasketWithBuy1Get1FreeDiscountTest {
         return Stream.of(
             discountedBy(noItems(), "0.0"),
             discountedBy(aSingleItemPricedPerUnit(), "0.0"),
-            discountedBy(twoItemsPricedPerUnit(), "0.49")
+            discountedBy(twoItemsPricedPerUnitWithBuy1Get1FreeDiscount(), "0.49")
 
         );
     }

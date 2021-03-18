@@ -17,4 +17,6 @@ public interface Item {
     default ItemByWeight add(ItemByWeight other) {
         throw new UnsupportedOperationException("operation needs to be overriden in implementing class");
     }
+
+    BigDecimal applyDiscount(Discount discount);
 }

@@ -4,11 +4,16 @@ import com.google.common.base.Preconditions;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class ByUnitProduct implements Product {
+public class ByUnitProduct extends Product {
 
     private final BigDecimal pricePerUnit;
 
     public ByUnitProduct(final BigDecimal pricePerUnit) {
+        this.pricePerUnit = pricePerUnit;
+    }
+
+    public ByUnitProduct(final BigDecimal pricePerUnit, DiscountType discountType) {
+        super(discountType);
         this.pricePerUnit = pricePerUnit;
     }
 

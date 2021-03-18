@@ -7,4 +7,7 @@ public interface Discount {
 
     BigDecimal calculate(Collection<Item> items);
 
+    BigDecimal apply(ItemByUnit itemByUnit);
+
+    BigDecimal apply(ItemByWeight itemByWeight);
 }

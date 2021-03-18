@@ -20,7 +20,6 @@ public class Basket {
     }
 
     public void add(final Item item) {
-
         this.itemsByProduct.compute(item.product(), (k, v) ->
             ofNullable(v).map(value -> value.add(item)).orElse(item));
     }

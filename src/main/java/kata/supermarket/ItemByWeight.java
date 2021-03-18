@@ -2,6 +2,7 @@ package kata.supermarket;
 
 import com.google.common.base.Preconditions;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class ItemByWeight implements Item {
 
@@ -20,7 +21,7 @@ public class ItemByWeight implements Item {
     public BigDecimal price() {
         return product.pricePerKilo()
             .multiply(weightInKilos)
-            .setScale(2, BigDecimal.ROUND_HALF_UP);
+            .setScale(2, RoundingMode.HALF_UP);
     }
 
     @Override
@@ -38,5 +39,10 @@ public class ItemByWeight implements Item {
     public ItemByWeight add(ItemByWeight other) {
         Preconditions.checkArgument(this.product.equals(other.product), "Cannot add incompatible products");
         return this.addWeight(other.weightInKilos);
+    }
+
+    @Override
+    public BigDecimal applyDiscount(Discount discount) {
+        return discount.apply(this);
     }
 }
